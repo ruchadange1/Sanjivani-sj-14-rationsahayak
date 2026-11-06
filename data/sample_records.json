@@ -1,0 +1,173 @@
+[
+    {
+        "id": 1,
+        "topic": "AAY Entitlement",
+        "rule": "Antyodaya Anna Yojana households are entitled to 35 kg of food grains per household per month under the National Food Security Act.",
+        "card_type": "AAY",
+        "quantity_or_limit": "35 kg per household per month",
+        "authority": "Central Government - NFSA",
+        "source_url": "https://nfsa.gov.in/portal/Salient_Features_NFSA_AA"
+    },
+    {
+        "id": 2,
+        "topic": "PHH Entitlement",
+        "rule": "Priority Household beneficiaries are entitled to 5 kg of food grains per person per month under the National Food Security Act.",
+        "card_type": "PHH",
+        "quantity_or_limit": "5 kg per person per month",
+        "authority": "Central Government - NFSA",
+        "source_url": "https://nfsa.gov.in/portal/Salient_Features_NFSA_AA"
+    },
+    {
+        "id": 3,
+        "topic": "Maharashtra Rural Income Limit",
+        "rule": "Under the Maharashtra Government Resolution dated 17 December 2013, an annual family income limit of Rs. 44,000 was specified for PHH beneficiary selection in rural areas.",
+        "card_type": "PHH",
+        "quantity_or_limit": "Rs. 44,000 annual family income",
+        "authority": "Maharashtra Government - GR dated 17.12.2013",
+        "source_url": "https://mahafood.gov.in/en/targeted-public-distribution-system/"
+    },
+    {
+        "id": 4,
+        "topic": "Maharashtra Urban Income Limit",
+        "rule": "Under the Maharashtra Government Resolution dated 17 December 2013, an annual family income limit of Rs. 59,000 was specified for PHH beneficiary selection in urban areas.",
+        "card_type": "PHH",
+        "quantity_or_limit": "Rs. 59,000 annual family income",
+        "authority": "Maharashtra Government - GR dated 17.12.2013",
+        "source_url": "https://mahafood.gov.in/en/targeted-public-distribution-system/"
+    },
+    {
+        "id": 5,
+        "topic": "Free Food Grains",
+        "rule": "The Central Government provides NFSA food grain entitlements free of cost to AAY households and PHH beneficiaries for five years beginning 1 January 2024.",
+        "card_type": "AAY and PHH",
+        "quantity_or_limit": "Free food grains from 01.01.2024 to 31.12.2028",
+        "authority": "Central Government - PMGKAY",
+        "source_url": "https://mahafood.gov.in/en/national-food-security-act-2013/"
+    },
+    {
+        "id": 6,
+        "topic": "Historical NFSA Grain Prices",
+        "rule": "The original NFSA central issue prices were Rs. 3 per kg for rice, Rs. 2 per kg for wheat and Rs. 1 per kg for coarse grains. These are historical prices and should not be treated as current prices under the free-grain notification.",
+        "card_type": "AAY and PHH",
+        "quantity_or_limit": "Historical: Rice Rs. 3, Wheat Rs. 2, Coarse grains Rs. 1 per kg",
+        "authority": "Central Government - NFSA",
+        "source_url": "https://mahafood.gov.in/en/national-food-security-act-2013/"
+    },
+    {
+        "id": 7,
+        "topic": "ONORC Portability",
+        "rule": "Under One Nation One Ration Card, NFSA beneficiaries can collect their entitled food grains from any participating ePoS-enabled Fair Price Shop across States and Union Territories.",
+        "card_type": "AAY and PHH",
+        "quantity_or_limit": "Nationwide ration portability",
+        "authority": "Central Government - ONORC",
+        "source_url": "https://dfpd.gov.in/faqs/en"
+    },
+    {
+        "id": 8,
+        "topic": "Existing Ration Card Under ONORC",
+        "rule": "Beneficiaries can use their existing NFSA AAY or PHH ration cards when migrating to another State. They do not need to surrender their existing ration card or obtain a new card for portability.",
+        "card_type": "AAY and PHH",
+        "quantity_or_limit": "Existing ration card; no new card required for portability",
+        "authority": "Central Government - ONORC",
+        "source_url": "https://dfpd.gov.in/faqs/en"
+    },
+    {
+        "id": 9,
+        "topic": "Authentication and ePoS Safeguards",
+        "rule": "Authentication methods include fingerprint-based biometric authentication, IRIS, Aadhaar OTP and PDS OTP. States and Union Territories have been advised not to deny food grains to genuine beneficiaries when biometric authentication, Aadhaar seeding, ePoS devices or network connectivity fail.",
+        "card_type": "AAY and PHH",
+        "quantity_or_limit": "Fingerprint, IRIS, Aadhaar OTP and PDS OTP",
+        "authority": "Central Government - DFPD",
+        "source_url": "https://dfpd.gov.in/faqs/en"
+    },
+    {
+        "id": 10,
+        "topic": "ONORC Helpline",
+        "rule": "The One Nation One Ration Card helpline provides information and assistance regarding ration portability.",
+        "card_type": "All NFSA beneficiaries",
+        "quantity_or_limit": "14445",
+        "authority": "Central Government and State PDS",
+        "source_url": "https://mahafood.gov.in/en/scheme/one-nation-one-ration-card/"
+    },
+    {
+        "id": 11,
+        "topic": "Woman as Head of Household",
+        "rule": "The eldest woman in an eligible household who is at least 18 years old is considered the head of the household for issuing a ration card.",
+        "card_type": "Eligible households",
+        "quantity_or_limit": "Eldest woman aged 18 years or above",
+        "authority": "Central Government - NFSA Section 13",
+        "source_url": "https://nfsa.gov.in/portal/Salient_Features_NFSA_AA"
+    },
+    {
+        "id": 12,
+        "topic": "Female Head Fallback",
+        "rule": "If a household has no woman aged 18 years or above, the eldest male member may be treated as the head of the household until a female member attains 18 years of age.",
+        "card_type": "Eligible households",
+        "quantity_or_limit": "Female member becomes eligible as head at 18 years",
+        "authority": "Central Government - NFSA Section 13",
+        "source_url": "https://www.indiacode.nic.in/bitstream/123456789/2113/1/201320.pdf"
+    },
+    {
+        "id": 13,
+        "topic": "Pregnant and Lactating Women",
+        "rule": "Pregnant women and lactating mothers are entitled to free nutritious meals through prescribed government programmes and maternity benefits of not less than Rs. 6,000, subject to applicable scheme provisions.",
+        "card_type": "Pregnant and lactating women",
+        "quantity_or_limit": "Nutritious meals and maternity benefit of at least Rs. 6,000",
+        "authority": "Central Government - NFSA",
+        "source_url": "https://dfpd.gov.in/faqs/en"
+    },
+    {
+        "id": 14,
+        "topic": "Children ICDS Entitlement",
+        "rule": "Children aged 6 months to 6 years are entitled to free nutritious meals through the Integrated Child Development Services programme.",
+        "card_type": "Children aged 6 months to 6 years",
+        "quantity_or_limit": "Free nutritious meals through Anganwadi centres",
+        "authority": "Central Government - ICDS",
+        "source_url": "https://dfpd.gov.in/faqs/en"
+    },
+    {
+        "id": 15,
+        "topic": "Children School Meal Entitlement",
+        "rule": "Children aged 6 to 14 years are entitled to nutritious meals through the prescribed school meal programme.",
+        "card_type": "Children aged 6 to 14 years",
+        "quantity_or_limit": "Nutritious school meals",
+        "authority": "Central Government - NFSA",
+        "source_url": "https://dfpd.gov.in/faqs/en"
+    },
+    {
+        "id": 16,
+        "topic": "Malnourished Children",
+        "rule": "Higher nutritional norms are prescribed for malnourished children up to 6 years of age under the NFSA nutrition provisions.",
+        "card_type": "Malnourished children",
+        "quantity_or_limit": "Higher nutritional norms",
+        "authority": "Central Government - NFSA and ICDS",
+        "source_url": "https://dfpd.gov.in/faqs/en"
+    },
+    {
+        "id": 17,
+        "topic": "District Grievance Redressal Officer",
+        "rule": "An aggrieved NFSA beneficiary can approach the District Grievance Redressal Officer for complaints concerning non-delivery of entitled food grains or meals.",
+        "card_type": "All NFSA beneficiaries",
+        "quantity_or_limit": "District-level grievance redressal",
+        "authority": "Central Government - NFSA Section 15",
+        "source_url": "https://dfpd.gov.in/faqs/en"
+    },
+    {
+        "id": 18,
+        "topic": "State Food Commission Appeal",
+        "rule": "A complainant dissatisfied with a DGRO order can appeal to the State Food Commission under the grievance redressal mechanism of the NFSA.",
+        "card_type": "All NFSA beneficiaries",
+        "quantity_or_limit": "Appeal against DGRO order",
+        "authority": "State Food Commission - NFSA Section 16",
+        "source_url": "https://dfpd.gov.in/faqs/en"
+    },
+    {
+        "id": 19,
+        "topic": "Maharashtra Grievance Helpline",
+        "rule": "Maharashtra ration card holders can contact the Food and Civil Supplies Department for Public Distribution System complaints through its toll-free helplines. The ONORC helpline is separately available for portability assistance.",
+        "card_type": "All ration card holders",
+        "quantity_or_limit": "1800-22-4950; 1967 (BSNL and MTNL); ONORC: 14445",
+        "authority": "Maharashtra Food and Civil Supplies Department",
+        "source_url": "https://mahafood.gov.in/en/grievance-redressal/"
+    }
+]
