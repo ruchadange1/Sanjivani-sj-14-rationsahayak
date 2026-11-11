@@ -1,22 +1,48 @@
+## How to Run
 
-# RationSahayak
+### 1. Clone the Repository
 
-## Product
-RationSahayak is an AI-powered citizen assistance system that helps Maharashtra citizens understand ration card eligibility, monthly food grain entitlements, ration prices, and government schemes.
+```bash
+git clone https://github.com/ruchadange1/sanjivani-sj-14-rationsahayak.git
+cd sanjivani-sj-14-rationsahayak
+```
 
-## Target User
-A migrant construction worker from Beed who is currently living in Kopargaon with his family of five and wants to understand whether his Priority Household (PHH) ration card works in Kopargaon and how much grain his family is entitled to receive.
+### 2. Create Virtual Environment
 
-## Problem Statement
-Many people are unaware of their ration card benefits, monthly grain entitlements, eligibility criteria, and ration portability facilities. They also do not know how to raise complaints when ration shops provide less grain than their entitlement.
+```bash
+python -m venv .venv
+```
 
-## Data Sources
+### 3. Activate Virtual Environment
 
-1. Department of Food and Public Distribution (DFPD):
-   https://dfpd.gov.in/faqs/en
+For Windows:
 
-2. National Food Security Act (NFSA):
-   https://nfsa.gov.in/portal/Salient_Features_NFSA_AA
+```bash
+.venv\Scripts\activate
+```
 
-3. Maharashtra Food and Civil Supplies Department:
-   https://mahafood.gov.in/
+### 4. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 5. Run FastAPI Application
+
+```bash
+python -m uvicorn app.main:app --reload
+```
+
+### 6. Open API Documentation
+
+http://127.0.0.1:8000/docs
+
+### 7. Check Application Health
+
+http://127.0.0.1:8000/health
+
+### 8. Run Data Exploration
+
+```bash
+python analysis/explore.py
+```
