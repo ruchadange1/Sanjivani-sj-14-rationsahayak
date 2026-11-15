@@ -4,7 +4,7 @@ import requests
 import pathlib
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-
+from app.vectorstore import collection, semantic_search
 from app.smart_search import smart_search
 from app.llm import generate_answer
 
@@ -164,3 +164,35 @@ def chat(data: ChatRequest):
 
     except (json.JSONDecodeError, KeyError, IndexError):
         raise HTTPException(status_code=502, detail="Invalid LLM response")
+
+
+# 7. SEMANTIC SEARCH
+@app.get("/search/semantic")
+def search_semantic(q: str):
+
+    if q.strip() == "":
+        raise HTTPException(status_code=400, detail="Empty search query")
+
+    # Check whether documents are indexed
+    if collection.count() == 0:
+        raise HTTPException(status_code=404, detail="No documents indexed")
+
+    results = semantic_search(q)
+
+    response = []
+
+    for i in range(len(results["documents"][0])):
+
+        response.append({
+            "text": results["documents"][0][i],
+            "source": results["metadatas"][0][i]["source"],
+            "page": results["metadatas"][0][i]["page"],
+            "title": results["metadatas"][0][i]["title"],
+            "distance": results["distances"][0][i]
+        })
+
+    return {
+        "query": q,
+        "total_results": len(response),
+        "results": response
+    }
