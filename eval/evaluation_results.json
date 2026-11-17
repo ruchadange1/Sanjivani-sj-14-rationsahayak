@@ -1,0 +1,701 @@
+[
+    {
+        "name": "Config 1",
+        "chunk_size": 400,
+        "top_k": 3,
+        "total_chunks": 23,
+        "total_questions": 15,
+        "answerable_questions": 14,
+        "relevant_answers": 14,
+        "retrieval_accuracy": 100.0,
+        "citation_available": 15,
+        "citation_rate": 100.0,
+        "question_results": [
+            {
+                "id": 1,
+                "question": "What is ONORC?",
+                "answerable": true,
+                "expected_keywords": [
+                    "One Nation One Ration Card",
+                    "portability",
+                    "ration card"
+                ],
+                "matched_keywords": [
+                    "One Nation One Ration Card",
+                    "portability",
+                    "ration card"
+                ],
+                "retrieval_relevant": true,
+                "citation_available": true,
+                "retrieved_sources": [
+                    "dfpd_faq.html",
+                    "nfsa_features.html",
+                    "dfpd_faq.html"
+                ]
+            },
+            {
+                "id": 2,
+                "question": "Can I use my Maharashtra ration card in another state?",
+                "answerable": true,
+                "expected_keywords": [
+                    "portability",
+                    "inter-state",
+                    "Fair Price Shop"
+                ],
+                "matched_keywords": [
+                    "portability",
+                    "inter-state",
+                    "Fair Price Shop"
+                ],
+                "retrieval_relevant": true,
+                "citation_available": true,
+                "retrieved_sources": [
+                    "dfpd_faq.html",
+                    "mahafood_nfsa.html",
+                    "dfpd_faq.html"
+                ]
+            },
+            {
+                "id": 3,
+                "question": "What is the purpose of the NFSA?",
+                "answerable": true,
+                "expected_keywords": [
+                    "food security",
+                    "foodgrains",
+                    "beneficiaries"
+                ],
+                "matched_keywords": [
+                    "food security",
+                    "foodgrains",
+                    "beneficiaries"
+                ],
+                "retrieval_relevant": true,
+                "citation_available": true,
+                "retrieved_sources": [
+                    "nfsa_features.html",
+                    "dfpd_faq.html",
+                    "dfpd_faq.html"
+                ]
+            },
+            {
+                "id": 4,
+                "question": "What is an Antyodaya Anna Yojana (AAY) card?",
+                "answerable": true,
+                "expected_keywords": [
+                    "AAY",
+                    "poorest households",
+                    "foodgrains"
+                ],
+                "matched_keywords": [
+                    "AAY",
+                    "foodgrains"
+                ],
+                "retrieval_relevant": true,
+                "citation_available": true,
+                "retrieved_sources": [
+                    "mahafood_nfsa.html",
+                    "dfpd_faq.html",
+                    "dfpd_faq.html"
+                ]
+            },
+            {
+                "id": 5,
+                "question": "What is the difference between AAY and PHH ration cards?",
+                "answerable": true,
+                "expected_keywords": [
+                    "AAY",
+                    "PHH",
+                    "entitlement"
+                ],
+                "matched_keywords": [
+                    "AAY",
+                    "PHH",
+                    "entitlement"
+                ],
+                "retrieval_relevant": true,
+                "citation_available": true,
+                "retrieved_sources": [
+                    "dfpd_faq.html",
+                    "dfpd_faq.html",
+                    "dfpd_faq.html"
+                ]
+            },
+            {
+                "id": 6,
+                "question": "How many kilograms of rice and wheat did my family actually collect from our fair price shop last month?",
+                "answerable": false,
+                "expected_keywords": [
+                    "I don't know"
+                ],
+                "matched_keywords": [],
+                "retrieval_relevant": null,
+                "citation_available": true,
+                "retrieved_sources": [
+                    "dfpd_faq.html",
+                    "dfpd_faq.html",
+                    "dfpd_faq.html"
+                ]
+            },
+            {
+                "id": 7,
+                "question": "What should I do if biometric authentication fails at a ration shop?",
+                "answerable": true,
+                "expected_keywords": [
+                    "biometric",
+                    "Aadhaar OTP",
+                    "alternative authentication"
+                ],
+                "matched_keywords": [
+                    "biometric"
+                ],
+                "retrieval_relevant": true,
+                "citation_available": true,
+                "retrieved_sources": [
+                    "dfpd_faq.html",
+                    "dfpd_faq.html",
+                    "dfpd_faq.html"
+                ]
+            },
+            {
+                "id": 8,
+                "question": "What is the role of an electronic Point of Sale device in ration distribution?",
+                "answerable": true,
+                "expected_keywords": [
+                    "ePoS",
+                    "authentication",
+                    "Fair Price Shop"
+                ],
+                "matched_keywords": [
+                    "ePoS",
+                    "authentication",
+                    "Fair Price Shop"
+                ],
+                "retrieval_relevant": true,
+                "citation_available": true,
+                "retrieved_sources": [
+                    "dfpd_faq.html",
+                    "dfpd_faq.html",
+                    "dfpd_faq.html"
+                ]
+            },
+            {
+                "id": 9,
+                "question": "What is the MERA RATION mobile application used for?",
+                "answerable": true,
+                "expected_keywords": [
+                    "MERA RATION",
+                    "entitlements",
+                    "ration shops"
+                ],
+                "matched_keywords": [
+                    "MERA RATION",
+                    "entitlements",
+                    "ration shops"
+                ],
+                "retrieval_relevant": true,
+                "citation_available": true,
+                "retrieved_sources": [
+                    "dfpd_faq.html",
+                    "dfpd_faq.html",
+                    "dfpd_faq.html"
+                ]
+            },
+            {
+                "id": 10,
+                "question": "How does ONORC help migrant workers?",
+                "answerable": true,
+                "expected_keywords": [
+                    "migrants",
+                    "portability",
+                    "foodgrains"
+                ],
+                "matched_keywords": [
+                    "migrants",
+                    "portability",
+                    "foodgrains"
+                ],
+                "retrieval_relevant": true,
+                "citation_available": true,
+                "retrieved_sources": [
+                    "dfpd_faq.html",
+                    "dfpd_faq.html",
+                    "dfpd_faq.html"
+                ]
+            },
+            {
+                "id": 11,
+                "question": "What benefits are available for pregnant women under NFSA?",
+                "answerable": true,
+                "expected_keywords": [
+                    "pregnant women",
+                    "maternity",
+                    "nutrition"
+                ],
+                "matched_keywords": [
+                    "pregnant women",
+                    "maternity",
+                    "nutrition"
+                ],
+                "retrieval_relevant": true,
+                "citation_available": true,
+                "retrieved_sources": [
+                    "nfsa_features.html",
+                    "dfpd_faq.html",
+                    "dfpd_faq.html"
+                ]
+            },
+            {
+                "id": 12,
+                "question": "What benefits are provided to children under NFSA?",
+                "answerable": true,
+                "expected_keywords": [
+                    "children",
+                    "nutrition",
+                    "ICDS",
+                    "mid-day meals"
+                ],
+                "matched_keywords": [
+                    "children",
+                    "nutrition",
+                    "ICDS"
+                ],
+                "retrieval_relevant": true,
+                "citation_available": true,
+                "retrieved_sources": [
+                    "dfpd_faq.html",
+                    "nfsa_features.html",
+                    "dfpd_faq.html"
+                ]
+            },
+            {
+                "id": 13,
+                "question": "What is Aadhaar seeding in the ration distribution system?",
+                "answerable": true,
+                "expected_keywords": [
+                    "Aadhaar",
+                    "ration card",
+                    "authentication"
+                ],
+                "matched_keywords": [
+                    "Aadhaar",
+                    "ration card",
+                    "authentication"
+                ],
+                "retrieval_relevant": true,
+                "citation_available": true,
+                "retrieved_sources": [
+                    "dfpd_faq.html",
+                    "dfpd_faq.html",
+                    "mahafood_nfsa.html"
+                ]
+            },
+            {
+                "id": 14,
+                "question": "Can beneficiaries collect ration without carrying their original physical ration card?",
+                "answerable": true,
+                "expected_keywords": [
+                    "Aadhaar",
+                    "ration card number",
+                    "ePoS"
+                ],
+                "matched_keywords": [
+                    "Aadhaar",
+                    "ePoS"
+                ],
+                "retrieval_relevant": true,
+                "citation_available": true,
+                "retrieved_sources": [
+                    "dfpd_faq.html",
+                    "mahafood_nfsa.html",
+                    "dfpd_faq.html"
+                ]
+            },
+            {
+                "id": 15,
+                "question": "Which portals are used to monitor ONORC transactions?",
+                "answerable": true,
+                "expected_keywords": [
+                    "Annavitran",
+                    "IM-PDS",
+                    "transactions"
+                ],
+                "matched_keywords": [
+                    "Annavitran",
+                    "IM-PDS",
+                    "transactions"
+                ],
+                "retrieval_relevant": true,
+                "citation_available": true,
+                "retrieved_sources": [
+                    "dfpd_faq.html",
+                    "nfsa_features.html",
+                    "dfpd_faq.html"
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Config 2",
+        "chunk_size": 600,
+        "top_k": 5,
+        "total_chunks": 14,
+        "total_questions": 15,
+        "answerable_questions": 14,
+        "relevant_answers": 14,
+        "retrieval_accuracy": 100.0,
+        "citation_available": 15,
+        "citation_rate": 100.0,
+        "question_results": [
+            {
+                "id": 1,
+                "question": "What is ONORC?",
+                "answerable": true,
+                "expected_keywords": [
+                    "One Nation One Ration Card",
+                    "portability",
+                    "ration card"
+                ],
+                "matched_keywords": [
+                    "portability",
+                    "ration card"
+                ],
+                "retrieval_relevant": true,
+                "citation_available": true,
+                "retrieved_sources": [
+                    "dfpd_faq.html",
+                    "dfpd_faq.html",
+                    "dfpd_faq.html",
+                    "dfpd_faq.html",
+                    "dfpd_faq.html"
+                ]
+            },
+            {
+                "id": 2,
+                "question": "Can I use my Maharashtra ration card in another state?",
+                "answerable": true,
+                "expected_keywords": [
+                    "portability",
+                    "inter-state",
+                    "Fair Price Shop"
+                ],
+                "matched_keywords": [
+                    "portability",
+                    "inter-state",
+                    "Fair Price Shop"
+                ],
+                "retrieval_relevant": true,
+                "citation_available": true,
+                "retrieved_sources": [
+                    "dfpd_faq.html",
+                    "mahafood_nfsa.html",
+                    "nfsa_features.html",
+                    "dfpd_faq.html",
+                    "dfpd_faq.html"
+                ]
+            },
+            {
+                "id": 3,
+                "question": "What is the purpose of the NFSA?",
+                "answerable": true,
+                "expected_keywords": [
+                    "food security",
+                    "foodgrains",
+                    "beneficiaries"
+                ],
+                "matched_keywords": [
+                    "food security",
+                    "foodgrains",
+                    "beneficiaries"
+                ],
+                "retrieval_relevant": true,
+                "citation_available": true,
+                "retrieved_sources": [
+                    "nfsa_features.html",
+                    "dfpd_faq.html",
+                    "dfpd_faq.html",
+                    "dfpd_faq.html",
+                    "dfpd_faq.html"
+                ]
+            },
+            {
+                "id": 4,
+                "question": "What is an Antyodaya Anna Yojana (AAY) card?",
+                "answerable": true,
+                "expected_keywords": [
+                    "AAY",
+                    "poorest households",
+                    "foodgrains"
+                ],
+                "matched_keywords": [
+                    "AAY",
+                    "foodgrains"
+                ],
+                "retrieval_relevant": true,
+                "citation_available": true,
+                "retrieved_sources": [
+                    "dfpd_faq.html",
+                    "dfpd_faq.html",
+                    "nfsa_features.html",
+                    "dfpd_faq.html",
+                    "dfpd_faq.html"
+                ]
+            },
+            {
+                "id": 5,
+                "question": "What is the difference between AAY and PHH ration cards?",
+                "answerable": true,
+                "expected_keywords": [
+                    "AAY",
+                    "PHH",
+                    "entitlement"
+                ],
+                "matched_keywords": [
+                    "AAY",
+                    "PHH",
+                    "entitlement"
+                ],
+                "retrieval_relevant": true,
+                "citation_available": true,
+                "retrieved_sources": [
+                    "dfpd_faq.html",
+                    "dfpd_faq.html",
+                    "nfsa_features.html",
+                    "dfpd_faq.html",
+                    "dfpd_faq.html"
+                ]
+            },
+            {
+                "id": 6,
+                "question": "How many kilograms of rice and wheat did my family actually collect from our fair price shop last month?",
+                "answerable": false,
+                "expected_keywords": [
+                    "I don't know"
+                ],
+                "matched_keywords": [],
+                "retrieval_relevant": null,
+                "citation_available": true,
+                "retrieved_sources": [
+                    "dfpd_faq.html",
+                    "dfpd_faq.html",
+                    "dfpd_faq.html",
+                    "dfpd_faq.html",
+                    "dfpd_faq.html"
+                ]
+            },
+            {
+                "id": 7,
+                "question": "What should I do if biometric authentication fails at a ration shop?",
+                "answerable": true,
+                "expected_keywords": [
+                    "biometric",
+                    "Aadhaar OTP",
+                    "alternative authentication"
+                ],
+                "matched_keywords": [
+                    "biometric"
+                ],
+                "retrieval_relevant": true,
+                "citation_available": true,
+                "retrieved_sources": [
+                    "dfpd_faq.html",
+                    "mahafood_nfsa.html",
+                    "dfpd_faq.html",
+                    "dfpd_faq.html",
+                    "dfpd_faq.html"
+                ]
+            },
+            {
+                "id": 8,
+                "question": "What is the role of an electronic Point of Sale device in ration distribution?",
+                "answerable": true,
+                "expected_keywords": [
+                    "ePoS",
+                    "authentication",
+                    "Fair Price Shop"
+                ],
+                "matched_keywords": [
+                    "ePoS",
+                    "authentication",
+                    "Fair Price Shop"
+                ],
+                "retrieval_relevant": true,
+                "citation_available": true,
+                "retrieved_sources": [
+                    "dfpd_faq.html",
+                    "dfpd_faq.html",
+                    "dfpd_faq.html",
+                    "dfpd_faq.html",
+                    "dfpd_faq.html"
+                ]
+            },
+            {
+                "id": 9,
+                "question": "What is the MERA RATION mobile application used for?",
+                "answerable": true,
+                "expected_keywords": [
+                    "MERA RATION",
+                    "entitlements",
+                    "ration shops"
+                ],
+                "matched_keywords": [
+                    "MERA RATION",
+                    "entitlements",
+                    "ration shops"
+                ],
+                "retrieval_relevant": true,
+                "citation_available": true,
+                "retrieved_sources": [
+                    "dfpd_faq.html",
+                    "nfsa_features.html",
+                    "dfpd_faq.html",
+                    "dfpd_faq.html",
+                    "dfpd_faq.html"
+                ]
+            },
+            {
+                "id": 10,
+                "question": "How does ONORC help migrant workers?",
+                "answerable": true,
+                "expected_keywords": [
+                    "migrants",
+                    "portability",
+                    "foodgrains"
+                ],
+                "matched_keywords": [
+                    "migrants",
+                    "portability",
+                    "foodgrains"
+                ],
+                "retrieval_relevant": true,
+                "citation_available": true,
+                "retrieved_sources": [
+                    "dfpd_faq.html",
+                    "dfpd_faq.html",
+                    "dfpd_faq.html",
+                    "nfsa_features.html",
+                    "dfpd_faq.html"
+                ]
+            },
+            {
+                "id": 11,
+                "question": "What benefits are available for pregnant women under NFSA?",
+                "answerable": true,
+                "expected_keywords": [
+                    "pregnant women",
+                    "maternity",
+                    "nutrition"
+                ],
+                "matched_keywords": [
+                    "pregnant women",
+                    "maternity",
+                    "nutrition"
+                ],
+                "retrieval_relevant": true,
+                "citation_available": true,
+                "retrieved_sources": [
+                    "nfsa_features.html",
+                    "dfpd_faq.html",
+                    "dfpd_faq.html",
+                    "dfpd_faq.html",
+                    "dfpd_faq.html"
+                ]
+            },
+            {
+                "id": 12,
+                "question": "What benefits are provided to children under NFSA?",
+                "answerable": true,
+                "expected_keywords": [
+                    "children",
+                    "nutrition",
+                    "ICDS",
+                    "mid-day meals"
+                ],
+                "matched_keywords": [
+                    "children",
+                    "nutrition",
+                    "ICDS"
+                ],
+                "retrieval_relevant": true,
+                "citation_available": true,
+                "retrieved_sources": [
+                    "nfsa_features.html",
+                    "dfpd_faq.html",
+                    "dfpd_faq.html",
+                    "dfpd_faq.html",
+                    "dfpd_faq.html"
+                ]
+            },
+            {
+                "id": 13,
+                "question": "What is Aadhaar seeding in the ration distribution system?",
+                "answerable": true,
+                "expected_keywords": [
+                    "Aadhaar",
+                    "ration card",
+                    "authentication"
+                ],
+                "matched_keywords": [
+                    "Aadhaar",
+                    "ration card",
+                    "authentication"
+                ],
+                "retrieval_relevant": true,
+                "citation_available": true,
+                "retrieved_sources": [
+                    "dfpd_faq.html",
+                    "nfsa_features.html",
+                    "dfpd_faq.html",
+                    "dfpd_faq.html",
+                    "dfpd_faq.html"
+                ]
+            },
+            {
+                "id": 14,
+                "question": "Can beneficiaries collect ration without carrying their original physical ration card?",
+                "answerable": true,
+                "expected_keywords": [
+                    "Aadhaar",
+                    "ration card number",
+                    "ePoS"
+                ],
+                "matched_keywords": [
+                    "Aadhaar",
+                    "ePoS"
+                ],
+                "retrieval_relevant": true,
+                "citation_available": true,
+                "retrieved_sources": [
+                    "dfpd_faq.html",
+                    "dfpd_faq.html",
+                    "dfpd_faq.html",
+                    "nfsa_features.html",
+                    "dfpd_faq.html"
+                ]
+            },
+            {
+                "id": 15,
+                "question": "Which portals are used to monitor ONORC transactions?",
+                "answerable": true,
+                "expected_keywords": [
+                    "Annavitran",
+                    "IM-PDS",
+                    "transactions"
+                ],
+                "matched_keywords": [
+                    "Annavitran",
+                    "IM-PDS",
+                    "transactions"
+                ],
+                "retrieval_relevant": true,
+                "citation_available": true,
+                "retrieved_sources": [
+                    "dfpd_faq.html",
+                    "dfpd_faq.html",
+                    "nfsa_features.html",
+                    "dfpd_faq.html",
+                    "dfpd_faq.html"
+                ]
+            }
+        ]
+    }
+]

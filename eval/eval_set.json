@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "question": "What is ONORC?",
+    "expected_keywords": ["One Nation One Ration Card", "portability", "ration card"],
+    "answerable": true
+  },
+  {
+    "id": 2,
+    "question": "Can I use my Maharashtra ration card in another state?",
+    "expected_keywords": ["portability", "inter-state", "Fair Price Shop"],
+    "answerable": true
+  },
+  {
+    "id": 3,
+    "question": "What is the purpose of the NFSA?",
+    "expected_keywords": ["food security", "foodgrains", "beneficiaries"],
+    "answerable": true
+  },
+  {
+    "id": 4,
+    "question": "What is an Antyodaya Anna Yojana (AAY) card?",
+    "expected_keywords": ["AAY", "poorest households", "foodgrains"],
+    "answerable": true
+  },
+  {
+    "id": 5,
+    "question": "What is the difference between AAY and PHH ration cards?",
+    "expected_keywords": ["AAY", "PHH", "entitlement"],
+    "answerable": true
+  },
+  {
+    "id": 6,
+    "question": "How many kilograms of rice and wheat did my family actually collect from our fair price shop last month?",
+    "expected_keywords": ["I don't know"],
+    "answerable": false
+  },
+  {
+    "id": 7,
+    "question": "What should I do if biometric authentication fails at a ration shop?",
+    "expected_keywords": ["biometric", "Aadhaar OTP", "alternative authentication"],
+    "answerable": true
+  },
+  {
+    "id": 8,
+    "question": "What is the role of an electronic Point of Sale device in ration distribution?",
+    "expected_keywords": ["ePoS", "authentication", "Fair Price Shop"],
+    "answerable": true
+  },
+  {
+    "id": 9,
+    "question": "What is the MERA RATION mobile application used for?",
+    "expected_keywords": ["MERA RATION", "entitlements", "ration shops"],
+    "answerable": true
+  },
+  {
+    "id": 10,
+    "question": "How does ONORC help migrant workers?",
+    "expected_keywords": ["migrants", "portability", "foodgrains"],
+    "answerable": true
+  },
+  {
+    "id": 11,
+    "question": "What benefits are available for pregnant women under NFSA?",
+    "expected_keywords": ["pregnant women", "maternity", "nutrition"],
+    "answerable": true
+  },
+  {
+    "id": 12,
+    "question": "What benefits are provided to children under NFSA?",
+    "expected_keywords": ["children", "nutrition", "ICDS", "mid-day meals"],
+    "answerable": true
+  },
+  {
+    "id": 13,
+    "question": "What is Aadhaar seeding in the ration distribution system?",
+    "expected_keywords": ["Aadhaar", "ration card", "authentication"],
+    "answerable": true
+  },
+  {
+    "id": 14,
+    "question": "Can beneficiaries collect ration without carrying their original physical ration card?",
+    "expected_keywords": ["Aadhaar", "ration card number", "ePoS"],
+    "answerable": true
+  },
+  {
+    "id": 15,
+    "question": "Which portals are used to monitor ONORC transactions?",
+    "expected_keywords": ["Annavitran", "IM-PDS", "transactions"],
+    "answerable": true
+  }
+]

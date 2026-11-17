@@ -7,6 +7,7 @@ from pydantic import BaseModel
 from app.vectorstore import collection, semantic_search
 from app.smart_search import smart_search
 from app.llm import generate_answer
+from app.rag import ask_question as rag_ask_question
 
 
 app = FastAPI(title="RationSahayak API")
@@ -196,3 +197,43 @@ def search_semantic(q: str):
         "total_results": len(response),
         "results": response
     }
+    
+    # 8. RAG QUESTION ANSWERING
+@app.post("/ask")
+def ask_rag_question(data: Question):
+
+    question = data.question.strip()
+
+    if question == "":
+        raise HTTPException(
+            status_code=400,
+            detail="Empty question"
+        )
+
+    # Check whether documents are indexed
+    if collection.count() == 0:
+        raise HTTPException(
+            status_code=404,
+            detail="No documents indexed"
+        )
+
+    try:
+        result = rag_ask_question(question)
+
+        return {
+            "question": question,
+            "answer": result["answer"],
+            "citations": result["citations"]
+        }
+
+    except ValueError as error:
+        raise HTTPException(
+            status_code=503,
+            detail=str(error)
+        )
+
+    except requests.RequestException:
+        raise HTTPException(
+            status_code=502,
+            detail="LLM request failed"
+        )

@@ -4,3 +4,4 @@ __pycache__/
 .env
 .vscode/
 data/chroma_db/
+data/eval_chroma_db/

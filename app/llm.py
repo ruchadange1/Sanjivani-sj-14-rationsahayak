@@ -37,7 +37,7 @@ def generate_answer(system_prompt, user_prompt):
             ]
         }
 
-        response = requests.post(url, json=data, timeout=60)
+        response = requests.post(url, json=data, timeout=120)
 
     elif provider == "groq":
 
@@ -65,7 +65,7 @@ def generate_answer(system_prompt, user_prompt):
             url,
             headers=headers,
             json=data,
-            timeout=60
+            timeout=120
         )
 
     else:

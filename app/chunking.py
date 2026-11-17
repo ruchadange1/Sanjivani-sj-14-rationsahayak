@@ -46,8 +46,9 @@ def read_markdown(file_path):
 
 
 # Function to divide text into chunks
+# Function to divide text into chunks
 def create_chunks(text, chunk_size=400, overlap=50):
-    
+
     words = text.split()
     chunks = []
 
@@ -68,13 +69,14 @@ def create_chunks(text, chunk_size=400, overlap=50):
 
 
 # Function to process all documents
-def load_and_chunk_documents():
+# Function to process all documents
+def load_and_chunk_documents(chunk_size=400, overlap=50):
 
     documents = []
 
     folders = [
-    base_path / "data" / "raw"
-]
+        base_path / "data" / "raw"
+    ]
 
     for folder in folders:
 
@@ -89,7 +91,7 @@ def load_and_chunk_documents():
             else:
                 continue
 
-            chunks = create_chunks(text)
+            chunks = create_chunks(text, chunk_size, overlap)
 
             for chunk in chunks:
 
