@@ -1,13 +1,17 @@
 import json
 import requests
-
 import pathlib
+
+from typing import Optional
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
+
 from app.vectorstore import collection, semantic_search
 from app.smart_search import smart_search
 from app.llm import generate_answer
 from app.rag import ask_question as rag_ask_question
+from app.graph import graph
+from langgraph.types import Command
 
 
 app = FastAPI(title="RationSahayak API")
@@ -32,6 +36,16 @@ class Question(BaseModel):
 class ChatRequest(BaseModel):
     question: str
     task: str = "general"
+
+
+class AgentRequest(BaseModel):
+    question: str
+    card_type: Optional[str] = None
+    family_size: Optional[int] = None
+    annual_income: Optional[float] = None
+    area: Optional[str] = None
+    thread_id: str
+    approved: bool = False
 
 
 # 1. HEALTH
@@ -114,11 +128,9 @@ def chat(data: ChatRequest):
     if question == "":
         raise HTTPException(status_code=400, detail="Empty question")
 
-    # Load system prompt
     with open(base_path / "prompts" / "system.txt", "r", encoding="utf-8") as file:
         system_prompt = file.read()
 
-    # Select task prompt
     if data.task == "eligibility":
         task_file = "task_2.txt"
     else:
@@ -127,7 +139,6 @@ def chat(data: ChatRequest):
     with open(base_path / "prompts" / task_file, "r", encoding="utf-8") as file:
         task_prompt = file.read()
 
-    # Find relevant records
     records = smart_search(load_records(), question)
 
     context = ""
@@ -135,7 +146,6 @@ def chat(data: ChatRequest):
     for record in records[:5]:
         context += record["rule"] + "\n"
 
-    # Prepare user prompt
     user_prompt = (
         task_prompt +
         "\n\nAvailable Records:\n" +
@@ -148,7 +158,6 @@ def chat(data: ChatRequest):
 
         answer = generate_answer(system_prompt, user_prompt)
 
-        # Convert response into JSON
         result = json.loads(answer)
 
         return {
@@ -174,7 +183,6 @@ def search_semantic(q: str):
     if q.strip() == "":
         raise HTTPException(status_code=400, detail="Empty search query")
 
-    # Check whether documents are indexed
     if collection.count() == 0:
         raise HTTPException(status_code=404, detail="No documents indexed")
 
@@ -197,27 +205,22 @@ def search_semantic(q: str):
         "total_results": len(response),
         "results": response
     }
-    
-    # 8. RAG QUESTION ANSWERING
+
+
+# 8. RAG QUESTION ANSWERING
 @app.post("/ask")
 def ask_rag_question(data: Question):
 
     question = data.question.strip()
 
     if question == "":
-        raise HTTPException(
-            status_code=400,
-            detail="Empty question"
-        )
+        raise HTTPException(status_code=400, detail="Empty question")
 
-    # Check whether documents are indexed
     if collection.count() == 0:
-        raise HTTPException(
-            status_code=404,
-            detail="No documents indexed"
-        )
+        raise HTTPException(status_code=404, detail="No documents indexed")
 
     try:
+
         result = rag_ask_question(question)
 
         return {
@@ -227,13 +230,74 @@ def ask_rag_question(data: Question):
         }
 
     except ValueError as error:
-        raise HTTPException(
-            status_code=503,
-            detail=str(error)
-        )
+        raise HTTPException(status_code=503, detail=str(error))
 
     except requests.RequestException:
-        raise HTTPException(
-            status_code=502,
-            detail="LLM request failed"
-        )
+        raise HTTPException(status_code=502, detail="LLM request failed")
+
+
+# 9. LANGGRAPH AGENT
+@app.post("/agent")
+def run_agent(data: AgentRequest):
+
+    question = data.question.strip()
+
+    if question == "":
+        raise HTTPException(status_code=400, detail="Empty question")
+
+    if data.thread_id.strip() == "":
+        raise HTTPException(status_code=400, detail="Thread ID is required")
+
+    config = {
+        "configurable": {
+            "thread_id": data.thread_id
+        }
+    }
+
+    try:
+
+        # Resume graph after approval
+        if data.approved:
+
+            result = graph.invoke(
+                Command(resume=True),
+                config
+            )
+
+        else:
+
+            # Start a new graph execution
+            state = {
+                "question": question,
+                "card_type": data.card_type,
+                "family_size": data.family_size,
+                "annual_income": data.annual_income,
+                "area": data.area,
+                "tool_used": "",
+                "answer": "",
+                "approved": False
+            }
+
+            result = graph.invoke(state, config)
+
+        # Check for approval request
+        if "__interrupt__" in result:
+
+            return {
+                "status": "approval_required",
+                "message": result["__interrupt__"][0].value["message"],
+                "thread_id": data.thread_id
+            }
+
+        return {
+            "status": "completed",
+            "tool_used": result["tool_used"],
+            "answer": result["answer"],
+            "thread_id": data.thread_id
+        }
+
+    except ValueError as error:
+        raise HTTPException(status_code=400, detail=str(error))
+
+    except requests.RequestException:
+        raise HTTPException(status_code=502, detail="Agent request failed")

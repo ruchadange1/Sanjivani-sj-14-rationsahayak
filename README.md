@@ -1,48 +1,14 @@
-## How to Run
+### Day 8 – RAG Evaluation Results
 
-### 1. Clone the Repository
+Evaluated two RAG configurations using 15 test questions.
 
-```bash
-git clone https://github.com/ruchadange1/sanjivani-sj-14-rationsahayak.git
-cd sanjivani-sj-14-rationsahayak
-```
+| Configuration | Chunk Size | Top-K | Total Chunks | Retrieval Accuracy | Citation Availability |
+|---|---:|---:|---:|---:|---:|
+| Config 1 (Winner) | 400 | 3 | 23 | 100% | 100% |
+| Config 2 | 600 | 5 | 14 | 100% | 100% |
 
-### 2. Create Virtual Environment
+**Winner: Config 1**
 
-```bash
-python -m venv .venv
-```
+Config 1 was selected because it achieved the same evaluation scores while retrieving fewer chunks per query.
 
-### 3. Activate Virtual Environment
-
-For Windows:
-
-```bash
-.venv\Scripts\activate
-```
-
-### 4. Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### 5. Run FastAPI Application
-
-```bash
-python -m uvicorn app.main:app --reload
-```
-
-### 6. Open API Documentation
-
-http://127.0.0.1:8000/docs
-
-### 7. Check Application Health
-
-http://127.0.0.1:8000/health
-
-### 8. Run Data Exploration
-
-```bash
-python analysis/explore.py
-```
+*Note: Retrieval accuracy measures keyword matching in retrieved documents, not the correctness of generated answers. Citation availability measures whether source metadata was returned.*
