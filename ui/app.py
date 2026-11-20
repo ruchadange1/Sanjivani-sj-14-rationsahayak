@@ -1,8 +1,10 @@
-import streamlit as st
-import requests
 import csv
-from pathlib import Path
+import os
 from datetime import datetime
+from pathlib import Path
+
+import requests
+import streamlit as st
 
 # -------------------------------
 # PAGE CONFIGURATION
@@ -14,7 +16,7 @@ st.set_page_config(
     layout="wide"
 )
 
-API_URL = "http://127.0.0.1:8000"
+API_URL = os.getenv("API_URL", "http://127.0.0.1:8000")
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = BASE_DIR / "data"
@@ -539,11 +541,9 @@ elif page == "💬 AI Assistant":
                 save_feedback("Negative")
                 st.success("Thank you for your feedback!")
 
-    if st.session_state.messages:
-
-        if st.button("🗑️ Clear Conversation"):
-            st.session_state.messages = []
-            st.rerun()
+    if st.session_state.messages and st.button("🗑️ Clear Conversation"):
+        st.session_state.messages = []
+        st.rerun()
 
 
 # -------------------------------

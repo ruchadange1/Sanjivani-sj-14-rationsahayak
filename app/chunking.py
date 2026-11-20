@@ -1,7 +1,7 @@
-from pathlib import Path
-from bs4 import BeautifulSoup
 import re
+from pathlib import Path
 
+from bs4 import BeautifulSoup
 
 # Project folder
 base_path = Path(__file__).resolve().parent.parent

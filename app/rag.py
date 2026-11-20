@@ -1,6 +1,5 @@
-from app.vectorstore import semantic_search
 from app.llm import generate_answer
-
+from app.vectorstore import semantic_search
 
 # RAG system prompt
 SYSTEM_PROMPT = """

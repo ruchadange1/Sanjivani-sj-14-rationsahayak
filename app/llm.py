@@ -1,8 +1,8 @@
 import os
-import requests
 from pathlib import Path
-from dotenv import load_dotenv
 
+import requests
+from dotenv import load_dotenv
 
 # Loading .env file
 base_path = Path(__file__).resolve().parent.parent

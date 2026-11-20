@@ -1,6 +1,7 @@
-import requests
 from pathlib import Path
- 
+
+import requests
+
 # getting project folder path
 base_path = Path(__file__).resolve().parent.parent
  

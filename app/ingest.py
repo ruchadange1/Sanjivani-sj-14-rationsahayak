@@ -1,10 +1,10 @@
-import re
 import json
+import re
 from pathlib import Path
+
 from bs4 import BeautifulSoup
 
 from app.models import Record
-
 
 sources = [
     {
@@ -174,7 +174,7 @@ def ingest_data():
 
                     records.append(record.__dict__)
 
-        except Exception as e:
+        except (OSError, KeyError, AttributeError, TypeError) as e:
             print("Error:", e)
 
     # Remove duplicate records

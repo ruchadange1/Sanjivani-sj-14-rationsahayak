@@ -8,9 +8,8 @@ file_path = base_path / "data" / "sample_records.json"
 
 # function to load all records
 def load_records():
-    file = open(file_path, "r", encoding="utf-8")
-    records = json.load(file)
-    file.close()
+    with open(file_path, "r", encoding="utf-8") as file:
+        records = json.load(file)
 
     return records
 

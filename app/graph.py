@@ -1,7 +1,8 @@
-from typing import TypedDict, Optional
-from langgraph.graph import StateGraph, START, END
+from typing import TypedDict
+
 from langgraph.checkpoint.memory import MemorySaver
-from langgraph.types import interrupt, Command
+from langgraph.graph import END, START, StateGraph
+from langgraph.types import interrupt
 
 from app.rag import ask_question
 from app.tools import ration_entitlement
@@ -10,10 +11,10 @@ from app.tools import ration_entitlement
 # Define agent state
 class AgentState(TypedDict):
     question: str
-    card_type: Optional[str]
-    family_size: Optional[int]
-    annual_income: Optional[float]
-    area: Optional[str]
+    card_type: str | None
+    family_size: int | None
+    annual_income: float | None
+    area: str | None
     tool_used: str
     answer: str
     approved: bool

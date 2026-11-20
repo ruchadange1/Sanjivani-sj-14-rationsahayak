@@ -1,18 +1,16 @@
 import json
-import requests
 import pathlib
 
-from typing import Optional
+import requests
 from fastapi import FastAPI, HTTPException
+from langgraph.types import Command
 from pydantic import BaseModel
 
-from app.vectorstore import collection, semantic_search
-from app.smart_search import smart_search
+from app.graph import graph
 from app.llm import generate_answer
 from app.rag import ask_question as rag_ask_question
-from app.graph import graph
-from langgraph.types import Command
-
+from app.smart_search import smart_search
+from app.vectorstore import collection, semantic_search
 
 app = FastAPI(title="RationSahayak API")
 
@@ -40,10 +38,10 @@ class ChatRequest(BaseModel):
 
 class AgentRequest(BaseModel):
     question: str
-    card_type: Optional[str] = None
-    family_size: Optional[int] = None
-    annual_income: Optional[float] = None
-    area: Optional[str] = None
+    card_type: str | None = None
+    family_size: int | None = None
+    annual_income: float | None = None
+    area: str | None = None
     thread_id: str
     approved: bool = False
 
