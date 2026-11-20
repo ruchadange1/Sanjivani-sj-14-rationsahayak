@@ -1,5 +1,7 @@
 # RationSahayak
 
+![RationSahayak CI](https://github.com/ruchadange1/Sanjivani-sj-14-rationsahayak/actions/workflows/ci.yml/badge.svg)
+
 **AI-Powered Ration Assistance System for Maharashtra**
 
 RationSahayak is an AI-powered ration assistance system designed to help users access ration-related information, understand their monthly foodgrain entitlements, and verify ration distribution.
