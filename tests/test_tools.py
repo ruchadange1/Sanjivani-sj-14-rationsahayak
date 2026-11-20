@@ -1,5 +1,6 @@
 import pytest
 
+from app.agent_loop import agent_loop
 from app.tools import ration_entitlement
 
 
@@ -25,3 +26,14 @@ def test_invalid_family_size():
 def test_invalid_card_type():
     with pytest.raises(ValueError):
         ration_entitlement("XYZ", 4)
+        
+        
+def test_agent_uses_ration_entitlement_tool():
+    result = agent_loop(
+        question="How much ration will I get?",
+        card_type="PHH",
+        family_size=3
+    )
+
+    assert result["tool_used"] == "ration_entitlement"
+    assert result["answer"]["monthly_entitlement"] == 15
