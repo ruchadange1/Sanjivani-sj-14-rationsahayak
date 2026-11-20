@@ -2,9 +2,10 @@ import json
 import time
 from pathlib import Path
 
-from app.smart_search import smart_search
-from app.llm import generate_answer
+import requests
 
+from app.llm import generate_answer
+from app.smart_search import smart_search
 
 # Project folder
 base_path = Path(__file__).resolve().parent.parent
@@ -105,7 +106,7 @@ for question in questions:
             "version_2": answer_v2
         })
 
-    except Exception as error:
+    except (ValueError, requests.RequestException) as error:
 
         print("Error:", error)
         print("Stopping comparison.")

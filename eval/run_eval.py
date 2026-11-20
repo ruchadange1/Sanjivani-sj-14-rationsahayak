@@ -6,7 +6,6 @@ import chromadb
 from app.chunking import load_and_chunk_documents
 from app.embed import generate_embeddings
 
-
 # Project paths
 base_path = Path(__file__).resolve().parent.parent
 

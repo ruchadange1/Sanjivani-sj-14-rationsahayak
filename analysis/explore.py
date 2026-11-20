@@ -1,5 +1,6 @@
-import pandas as pd
 import json
+
+import pandas as pd
 
 # Loading records
 with open("data/records.json", "r", encoding="utf-8") as file:

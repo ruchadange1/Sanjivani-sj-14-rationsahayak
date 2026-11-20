@@ -1,7 +1,6 @@
 from pathlib import Path
 
-from app.vectorstore import collection, semantic_search, index_documents
-
+from app.vectorstore import collection, index_documents, semantic_search
 
 # Project folder
 base_path = Path(__file__).resolve().parent.parent
