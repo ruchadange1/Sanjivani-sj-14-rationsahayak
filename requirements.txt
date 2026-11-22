@@ -13,3 +13,4 @@ httpx
 ruff
 numpy
 fastembed
+cachetools

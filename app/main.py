@@ -5,7 +5,7 @@ from contextlib import asynccontextmanager
 import requests
 from fastapi import FastAPI, HTTPException
 from langgraph.types import Command
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from app.graph import graph
 from app.llm import generate_answer
@@ -69,23 +69,23 @@ def load_records():
 # ==========================================
 
 class Question(BaseModel):
-    question: str
+    question: str = Field(..., max_length=1000)
 
 
 class ChatRequest(BaseModel):
-    question: str
+    question: str = Field(..., max_length=1000)
     task: str = "general"
 
 
 class AgentRequest(BaseModel):
-    question: str
+    question: str = Field(..., max_length=1000)
     card_type: str | None = None
     family_size: int | None = None
     annual_income: float | None = None
     area: str | None = None
     thread_id: str
     approved: bool = False
-
+    
 
 # ==========================================
 # 5. HEALTH
