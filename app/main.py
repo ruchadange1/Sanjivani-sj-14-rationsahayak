@@ -1,5 +1,6 @@
 import json
 import pathlib
+from contextlib import asynccontextmanager
 
 import requests
 from fastapi import FastAPI, HTTPException
@@ -10,23 +11,63 @@ from app.graph import graph
 from app.llm import generate_answer
 from app.rag import ask_question as rag_ask_question
 from app.smart_search import smart_search
-from app.vectorstore import collection, semantic_search
+from app.vectorstore import collection, index_documents, semantic_search
 
-app = FastAPI(title="RationSahayak API")
+# ==========================================
+# 1. APPLICATION LIFESPAN
+# ==========================================
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+
+    try:
+        document_count = collection.count()
+
+        if document_count == 0:
+            print("No documents found. Starting document indexing...")
+
+            index_documents()
+
+            print("Document indexing completed.")
+            print("Total indexed documents:", collection.count())
+
+        else:
+            print("Documents already indexed:", document_count)
+
+    except Exception as error:
+        print("Vector database initialization failed:", error)
+        raise
+
+    yield
 
 
-# Project folder location
+app = FastAPI(
+    title="RationSahayak API",
+    lifespan=lifespan
+)
+
+
+# ==========================================
+# 2. PROJECT FOLDER LOCATION
+# ==========================================
+
 base_path = pathlib.Path(__file__).resolve().parent.parent
 file_path = base_path / "data" / "records.json"
 
 
-# Load records
+# ==========================================
+# 3. LOAD RECORDS
+# ==========================================
+
 def load_records():
     with open(file_path, "r", encoding="utf-8") as file:
         return json.load(file)
 
 
-# Request models
+# ==========================================
+# 4. REQUEST MODELS
+# ==========================================
+
 class Question(BaseModel):
     question: str
 
@@ -46,13 +87,19 @@ class AgentRequest(BaseModel):
     approved: bool = False
 
 
-# 1. HEALTH
+# ==========================================
+# 5. HEALTH
+# ==========================================
+
 @app.get("/health")
 def health():
     return {"status": "healthy"}
 
 
-# 2. GET RECORDS
+# ==========================================
+# 6. GET RECORDS
+# ==========================================
+
 @app.get("/records")
 def get_records(limit: int = 10):
 
@@ -70,7 +117,10 @@ def get_records(limit: int = 10):
     return result
 
 
-# 3. GET RECORD BY ID
+# ==========================================
+# 7. GET RECORD BY ID
+# ==========================================
+
 @app.get("/records/{id}")
 def get_record(id: int):
 
@@ -85,7 +135,10 @@ def get_record(id: int):
     return record
 
 
-# 4. SMART SEARCH
+# ==========================================
+# 8. SMART SEARCH
+# ==========================================
+
 @app.get("/search")
 def search_records(q: str):
 
@@ -101,7 +154,10 @@ def search_records(q: str):
     }
 
 
-# 5. POST QUESTIONS
+# ==========================================
+# 9. POST QUESTIONS
+# ==========================================
+
 @app.post("/questions")
 def ask_question(data: Question):
 
@@ -117,7 +173,10 @@ def ask_question(data: Question):
     }
 
 
-# 6. CHAT WITH RATIONSAHAYAK
+# ==========================================
+# 10. CHAT WITH RATIONSAHAYAK
+# ==========================================
+
 @app.post("/chat")
 def chat(data: ChatRequest):
 
@@ -126,7 +185,11 @@ def chat(data: ChatRequest):
     if question == "":
         raise HTTPException(status_code=400, detail="Empty question")
 
-    with open(base_path / "prompts" / "system.txt", "r", encoding="utf-8") as file:
+    with open(
+        base_path / "prompts" / "system.txt",
+        "r",
+        encoding="utf-8"
+    ) as file:
         system_prompt = file.read()
 
     if data.task == "eligibility":
@@ -134,7 +197,11 @@ def chat(data: ChatRequest):
     else:
         task_file = "task_1.txt"
 
-    with open(base_path / "prompts" / task_file, "r", encoding="utf-8") as file:
+    with open(
+        base_path / "prompts" / task_file,
+        "r",
+        encoding="utf-8"
+    ) as file:
         task_prompt = file.read()
 
     records = smart_search(load_records(), question)
@@ -174,7 +241,10 @@ def chat(data: ChatRequest):
         raise HTTPException(status_code=502, detail="Invalid LLM response")
 
 
-# 7. SEMANTIC SEARCH
+# ==========================================
+# 11. SEMANTIC SEARCH
+# ==========================================
+
 @app.get("/search/semantic")
 def search_semantic(q: str):
 
@@ -205,7 +275,10 @@ def search_semantic(q: str):
     }
 
 
-# 8. RAG QUESTION ANSWERING
+# ==========================================
+# 12. RAG QUESTION ANSWERING
+# ==========================================
+
 @app.post("/ask")
 def ask_rag_question(data: Question):
 
@@ -234,7 +307,10 @@ def ask_rag_question(data: Question):
         raise HTTPException(status_code=502, detail="LLM request failed")
 
 
-# 9. LANGGRAPH AGENT
+# ==========================================
+# 13. LANGGRAPH AGENT
+# ==========================================
+
 @app.post("/agent")
 def run_agent(data: AgentRequest):
 
