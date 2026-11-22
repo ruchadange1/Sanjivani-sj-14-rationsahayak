@@ -201,13 +201,38 @@ st.markdown("""
     border-radius: 12px;
     padding: 14px;
 }
+/* AI Assistant Markdown Tables */
+.stApp table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    background-color: #FFFFFF !important;
+}
+
+.stApp table th {
+    background-color: #E8F0E8 !important;
+    color: #205C48 !important;
+    font-weight: 700 !important;
+    border: 1px solid #DCE7DC !important;
+    padding: 12px !important;
+    text-align: left !important;
+}
+
+.stApp table td {
+    background-color: #FFFFFF !important;
+    color: #263A32 !important;
+    border: 1px solid #DFE9E0 !important;
+    padding: 12px !important;
+}
+
+.stApp table tr:hover td {
+    background-color: #F1F7F2 !important;
+}
 
 [data-testid="stChatMessage"] p,
 [data-testid="stChatMessage"] li {
     color: #263A32 !important;
 }
 
-/* Buttons */
 /* Buttons */
 div.stButton > button,
 div.stDownloadButton > button,

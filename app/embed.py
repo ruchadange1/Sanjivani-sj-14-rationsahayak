@@ -1,33 +1,46 @@
-from sentence_transformers import SentenceTransformer
+import numpy as np
 
-# Load embedding model
-model = SentenceTransformer("all-MiniLM-L6-v2")
+# Model will initially remain unloaded
+model = None
 
 
-# Function to generate embeddings
+def get_model():
+    global model
+
+    if model is None:
+        from fastembed import TextEmbedding
+
+        model = TextEmbedding(
+            model_name="sentence-transformers/all-MiniLM-L6-v2"
+        )
+
+    return model
+
+
 def generate_embeddings(texts):
+    embedding_model = get_model()
 
-    embeddings = model.encode(texts)
+    embeddings = list(
+        embedding_model.embed(
+            texts,
+            batch_size=8
+        )
+    )
 
-    return embeddings
+    return np.array(embeddings)
 
 
-# Test embedding generation
 if __name__ == "__main__":
-
     from app.chunking import load_and_chunk_documents
 
-    # Load document chunks
     documents = load_and_chunk_documents()
-
-    # Extract text from chunks
     texts = [doc["text"] for doc in documents]
 
-    # Generate embeddings
     embeddings = generate_embeddings(texts)
 
     print("Total chunks:", len(texts))
     print("Total embeddings:", len(embeddings))
     print("Embedding dimensions:", len(embeddings[0]))
+
     print("\nFirst embedding:")
     print(embeddings[0][:10])

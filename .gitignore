@@ -5,3 +5,4 @@ __pycache__/
 .vscode/
 data/chroma_db/
 data/eval_chroma_db/
+data/feedback.csv
