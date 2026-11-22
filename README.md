@@ -6,6 +6,43 @@
 
 RationSahayak is an AI-powered ration assistance system designed to help users access ration-related information, understand their monthly foodgrain entitlements, and verify ration distribution.
 
+## Live Application
+
+| Service | URL |
+|---|---|
+| Streamlit Frontend | https://rationsahayak-ui.onrender.com |
+| FastAPI Backend | https://rationsahayak-api.onrender.com |
+| Swagger Documentation | https://rationsahayak-api.onrender.com/docs |
+| API Health Check | https://rationsahayak-api.onrender.com/health |
+
+## Key Features
+
+### 1. AI Ration Assistant
+- Answers questions related to ration cards, eligibility and government schemes.
+- Uses Retrieval-Augmented Generation (RAG).
+- Displays source citations to support generated answers.
+
+### 2. User Feedback
+- Allows users to mark AI responses as Helpful or Not Helpful.
+- Stores feedback in `data/feedback.csv`.
+- Records the question, answer, timestamp and feedback rating.
+
+### 3. Monthly Ration Calculator
+- Supports AAY and PHH ration cards.
+- Calculates monthly foodgrain entitlement.
+- AAY: 35 kg per household per month.
+- PHH: 5 kg per person per month.
+
+### 4. e-PoS Verification
+- Compares calculated entitlement with the actual quantity received.
+- Displays the difference between expected and received quantities.
+- Helps users identify possible discrepancies.
+
+### 5. Downloadable Ration Slip
+- Generates a monthly ration slip.
+- Includes card type, family size, expected grain, received grain and quantity difference.
+- Allows users to download the slip.
+
 ## Day 8 – RAG Evaluation Results
 
 Evaluated two RAG configurations using 15 test questions.
@@ -22,38 +59,6 @@ Config 1 was selected because it achieved the same evaluation scores while retri
 *Note: Retrieval accuracy measures keyword matching in retrieved documents, not the correctness of generated answers. Citation availability measures whether source metadata was returned.*
 
 ## Day 10 – Application Improvements and Screenshots
-
-### Application Overview
-
-RationSahayak is an AI-powered ration assistance system designed to help users access ration-related information, understand their monthly foodgrain entitlements, and verify ration distribution.
-
-### Key Features
-
-1. **AI Ration Assistant**
-   - Answers questions related to ration cards, eligibility and government schemes.
-   - Uses Retrieval-Augmented Generation (RAG).
-   - Displays source citations to support generated answers.
-
-2. **User Feedback**
-   - Allows users to mark AI responses as Helpful or Not Helpful.
-   - Stores feedback in `data/feedback.csv`.
-   - Records the question, answer, timestamp and feedback rating.
-
-3. **Monthly Ration Calculator**
-   - Supports AAY and PHH ration cards.
-   - Calculates monthly foodgrain entitlement.
-   - AAY: 35 kg per household per month.
-   - PHH: 5 kg per person per month.
-
-4. **e-PoS Verification**
-   - Compares calculated entitlement with the actual quantity received.
-   - Displays the difference between expected and received quantities.
-   - Helps users identify possible discrepancies.
-
-5. **Downloadable Ration Slip**
-   - Generates a monthly ration slip.
-   - Includes card type, family size, expected grain, received grain and quantity difference.
-   - Allows users to download the slip.
 
 ### Application Screenshots
 
@@ -81,7 +86,7 @@ The ration calculator provides an estimated entitlement based on the selected ca
 
 ### S1 – Testing and Code Quality
 
-Created a `tests/` directory with 14 pytest test cases.
+Created a `tests/` directory containing 15 pytest test cases.
 
 Testing includes:
 
@@ -94,10 +99,10 @@ Testing includes:
 - FastAPI `/ask` endpoint using a fake LLM.
 - AAY and PHH ration entitlement calculations.
 - Invalid family size and invalid card type handling.
+- LangGraph ration entitlement tool integration.
 
 **Testing Results:**
-
-- Pytest: 14 tests passed.
+- Pytest: 15 tests passed.
 - Ruff: All checks passed.
 
 ### S2 – Docker Setup
@@ -113,7 +118,6 @@ Both services communicate through Docker Compose networking.
 ### Run with Docker
 
 **Prerequisites:**
-
 - Docker Desktop installed and running.
 - Docker Compose.
 - Required environment variables configured in the `.env` file.
@@ -140,9 +144,7 @@ cd Sanjivani-sj-14-rationsahayak
 docker compose up --build
 ```
 
-### Application URLs
-
-Once the containers are running, access the application using:
+### Local Application URLs
 
 | Service | URL |
 |---|---|
@@ -153,24 +155,94 @@ Once the containers are running, access the application using:
 
 ### Stop the Application
 
-To stop and remove the running containers, execute:
-
 ```bash
 docker compose down
 ```
+
+## Day 12 – GitHub Actions CI/CD
+
+Implemented a GitHub Actions workflow for automated testing and code quality checks.
+
+**Workflow file:** `.github/workflows/ci.yml`
+
+### CI Pipeline
+
+The pipeline performs:
+
+1. Ruff code-quality checks.
+2. Pytest automated testing.
+3. Docker image build verification.
+
+### CI Results
+
+- Ruff checks: Passed.
+- Pytest: 15 tests passed.
+- Docker build: Successful.
+- GitHub Actions: All required checks green.
+
+### Pull Request Workflow
+
+- Created a feature branch for the CI/CD implementation.
+- Opened a pull request.
+- Verified that CI checks passed.
+- Merged the pull request into the `main` branch.
+
+The GitHub Actions status badge at the top of this README displays the workflow status.
+
+## Deployment – Render
+
+Deployed RationSahayak using Render with separate frontend and backend services.
+
+### Backend Deployment
+
+- Platform: Render.
+- Framework: FastAPI.
+- Runtime: Docker.
+- API health endpoint: `/health`.
+- Automatic document indexing during application startup.
+- Groq integration for LLM-based answer generation.
+
+### Frontend Deployment
+
+- Platform: Render.
+- Framework: Streamlit.
+- Runtime: Docker.
+- Connected to the deployed FastAPI backend using the `API_URL` environment variable.
+
+### Deployment Verification
+
+Verified the following:
+
+- Frontend loads successfully.
+- Backend health endpoint returns a healthy response.
+- RAG question answering works.
+- Retrieved source citations are returned.
+- Monthly ration calculator works.
+- e-PoS verification identifies quantity differences.
+- User feedback interaction works.
 
 ## Technologies Used
 
 - **Programming Language:** Python
 - **Backend:** FastAPI
 - **Frontend:** Streamlit
+- **LLM Provider:** Groq
 - **AI Architecture:** Retrieval-Augmented Generation (RAG)
+- **Agent Framework:** LangGraph
 - **Vector Database:** ChromaDB
-- **Embeddings:** Sentence Transformers
+- **Embeddings:** FastEmbed
 - **Testing:** Pytest
 - **Code Quality:** Ruff
 - **Containerization:** Docker and Docker Compose
+- **CI/CD:** GitHub Actions
+- **Deployment:** Render
 - **Version Control:** Git and GitHub
+
+## Project Repository
+
+**GitHub:** https://github.com/ruchadange1/Sanjivani-sj-14-rationsahayak
+
+**Live Application:** https://rationsahayak-ui.onrender.com
 
 ---
 
