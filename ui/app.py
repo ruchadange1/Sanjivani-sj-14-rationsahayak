@@ -6,10 +6,7 @@ from pathlib import Path
 import requests
 import streamlit as st
 
-# -------------------------------
 # PAGE CONFIGURATION
-# -------------------------------
-
 st.set_page_config(
     page_title="RationSahayak",
     page_icon="🌾",
@@ -22,37 +19,25 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = BASE_DIR / "data"
 FEEDBACK_FILE = DATA_DIR / "feedback.csv"
 
-
-# -------------------------------
 # SESSION STATE
-# -------------------------------
-
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
 if "ration_slip" not in st.session_state:
     st.session_state.ration_slip = None
 
-
-# -------------------------------
 # CUSTOM CSS
-# -------------------------------
-
 st.markdown("""
 <style>
+:root { color-scheme: light; }
 
-/* Main application */
-.stApp {
-    background-color: #F6F8F6;
-    color: #263A32;
-}
-
-[data-testid="stAppViewContainer"] {
-    background-color: #F6F8F6;
-}
-
+.stApp,
+[data-testid="stAppViewContainer"],
+[data-testid="stMain"],
+[data-testid="stMainBlockContainer"],
 [data-testid="stHeader"] {
-    background-color: #F6F8F6;
+    background: #F5F8F5 !important;
+    color: #20372D !important;
 }
 
 .block-container {
@@ -61,235 +46,188 @@ st.markdown("""
     padding-bottom: 3rem;
 }
 
-/* General text */
-.stApp p,
-.stApp label,
-.stApp li,
-.stApp span,
-.stApp h1,
-.stApp h2,
-.stApp h3,
-.stApp h4 {
-    color: #263A32;
+.stApp p, .stApp label, .stApp li, .stApp span,
+.stApp h1, .stApp h2, .stApp h3, .stApp h4 {
+    color: #20372D;
 }
 
-/* Sidebar */
 [data-testid="stSidebar"] {
-    background-color: #E8F0E8;
-    border-right: 1px solid #DCE7DC;
+    background: #E7F0E8 !important;
+    border-right: 1px solid #C9DCCB !important;
 }
 
 [data-testid="stSidebar"] * {
-    color: #263A32;
+    color: #20372D !important;
 }
 
-[data-testid="stSidebar"] [data-testid="stRadio"] label {
-    padding: 8px;
-    border-radius: 8px;
-}
-
-/* Header banner */
 .main-header {
     background: linear-gradient(120deg, #E2F2E9, #CBE8D9);
     padding: 30px;
+    border: 1px solid #D5E9DB;
     border-radius: 16px;
     margin-bottom: 28px;
-    border: 1px solid #D5E9DB;
 }
 
-.main-header h1 {
-    color: #205C48 !important;
-    font-size: 34px;
-    margin-bottom: 8px;
-}
+.main-header h1 { color: #205C48 !important; font-size: 34px; }
+.main-header p { color: #456657 !important; font-size: 15px; }
 
-.main-header p {
-    color: #456657 !important;
-    font-size: 15px;
-}
-
-/* Section headings */
 .section-title {
-    color: #263A32;
+    color: #20372D;
     font-size: 26px;
     font-weight: 700;
     margin-bottom: 5px;
 }
 
 .section-description {
-    color: #718078;
+    color: #64756B;
     font-size: 14px;
     margin-bottom: 22px;
 }
 
-/* Dashboard cards */
 .dashboard-card {
     background: #FFFFFF;
     padding: 23px;
+    border: 1px solid #D4E3D6;
     border-radius: 14px;
-    border: 1px solid #DFE9E0;
     min-height: 150px;
     margin-bottom: 15px;
 }
 
-.dashboard-card h3 {
-    color: #27866E !important;
-    font-size: 19px;
-}
+.dashboard-card h3 { color: #20745D !important; font-size: 19px; }
+.dashboard-card p { color: #52675C !important; font-size: 14px; }
 
-.dashboard-card p {
-    color: #64756B !important;
-    font-size: 14px;
-}
-
-/* Metric cards */
 [data-testid="stMetric"] {
-    background: #FFFFFF;
-    border: 1px solid #DFE9E0;
+    background: #FFFFFF !important;
+    border: 1px solid #D4E3D6 !important;
     border-radius: 12px;
     padding: 18px;
 }
 
-[data-testid="stMetricLabel"] {
-    color: #52675C !important;
-}
-
-[data-testid="stMetricValue"] {
-    color: #27866E !important;
+[data-testid="stMetricLabel"] { color: #52675C !important; }
+[data-testid="stMetricValue"],
+[data-testid="stMetricDelta"] {
+    color: #20745D !important;
     font-weight: 700;
 }
 
-[data-testid="stMetricDelta"] {
-    color: #27866E !important;
-}
-
-/* Input fields */
-.stTextInput input,
-.stNumberInput input,
-.stTextArea textarea {
-    background-color: #FFFFFF !important;
-    color: #263A32 !important;
-    border: 1px solid #CBD9CE !important;
+.stTextInput input, .stNumberInput input, .stTextArea textarea {
+    background: #FFFFFF !important;
+    color: #20372D !important;
+    border: 1px solid #BFD2C3 !important;
     border-radius: 9px !important;
 }
 
-.stTextInput input::placeholder,
-.stTextArea textarea::placeholder {
-    color: #87968C !important;
+.stTextInput input::placeholder, .stTextArea textarea::placeholder {
+    color: #718078 !important;
 }
 
-/* Select boxes */
 [data-baseweb="select"] > div {
-    background-color: #FFFFFF !important;
-    color: #263A32 !important;
-    border-color: #CBD9CE !important;
+    background: #FFFFFF !important;
+    color: #20372D !important;
+    border-color: #BFD2C3 !important;
 }
 
-[data-baseweb="popover"],
-[data-baseweb="menu"] {
-    background-color: #FFFFFF !important;
+[data-baseweb="popover"], [data-baseweb="menu"],
+[data-baseweb="option"] {
+    background: #FFFFFF !important;
+    color: #20372D !important;
 }
 
-[data-baseweb="menu"] * {
-    color: #263A32 !important;
+[data-baseweb="option"]:hover { background: #E7F2E9 !important; }
+
+[data-testid="stChatMessage"],
+[data-testid="stExpander"],
+[data-testid="stForm"] {
+    background: #FFFFFF !important;
+    border: 1px solid #D4E3D6 !important;
+    border-radius: 12px !important;
 }
 
-/* Chat messages */
-[data-testid="stChatMessage"] {
-    background-color: #FFFFFF !important;
-    border: 1px solid #DFE9E0;
-    border-radius: 12px;
-    padding: 14px;
+[data-testid="stChatMessage"] { padding: 14px; }
+[data-testid="stChatMessage"] p,
+[data-testid="stChatMessage"] li,
+[data-testid="stChatMessage"] strong {
+    color: #20372D !important;
 }
-/* AI Assistant Markdown Tables */
+
+[data-testid="stExpander"] summary,
+[data-testid="stExpander"] summary p {
+    color: #205C48 !important;
+    font-weight: 600 !important;
+}
+
+[data-testid="stForm"] { padding: 15px; }
+
+[data-testid="stCode"], .stCode, pre, pre code, code {
+    background: #F0F5F0 !important;
+    color: #20372D !important;
+    border: 1px solid #D7E4D9 !important;
+}
+
 .stApp table {
     width: 100% !important;
     border-collapse: collapse !important;
-    background-color: #FFFFFF !important;
+    background: #FFFFFF !important;
 }
 
 .stApp table th {
-    background-color: #E8F0E8 !important;
+    background: #E7F0E8 !important;
     color: #205C48 !important;
     font-weight: 700 !important;
-    border: 1px solid #DCE7DC !important;
-    padding: 12px !important;
     text-align: left !important;
 }
 
-.stApp table td {
-    background-color: #FFFFFF !important;
-    color: #263A32 !important;
-    border: 1px solid #DFE9E0 !important;
+.stApp table th, .stApp table td {
+    border: 1px solid #D4E3D6 !important;
     padding: 12px !important;
 }
 
-.stApp table tr:hover td {
-    background-color: #F1F7F2 !important;
-}
+.stApp table td { background: #FFFFFF !important; color: #20372D !important; }
+.stApp table tr:hover td { background: #F1F7F2 !important; }
 
-[data-testid="stChatMessage"] p,
-[data-testid="stChatMessage"] li {
-    color: #263A32 !important;
-}
-
-/* Buttons */
 div.stButton > button,
 div.stDownloadButton > button,
 div.stFormSubmitButton > button {
-    background-color: #27866E !important;
+    background: #20745D !important;
     color: #FFFFFF !important;
-    border: 1px solid #27866E !important;
+    border: 1px solid #20745D !important;
     border-radius: 9px !important;
     font-weight: 600 !important;
 }
 
-div.stButton > button *,
-div.stDownloadButton > button *,
-div.stFormSubmitButton > button * {
-    color: #FFFFFF !important;
-}
+div.stButton > button *, div.stDownloadButton > button *,
+div.stFormSubmitButton > button * { color: #FFFFFF !important; }
 
 div.stButton > button:hover {
-    background-color: #1E705A !important;
-    color: #FFFFFF !important;
+    background: #185B48 !important;
 }
 
-/* Forms */
-[data-testid="stForm"] {
-    background-color: #FFFFFF;
-    border: 1px solid #DFE9E0;
-    border-radius: 12px;
-    padding: 15px;
-}
-
-/* Alerts */
 [data-testid="stAlert"] {
-    border-radius: 10px;
+    color: #20372D !important;
+    border-radius: 10px !important;
 }
 
-/* Footer */
+[data-testid="stAlert"] p { color: #20372D !important; }
+
+.stApp a { color: #176B53 !important; }
+.stApp a:hover { color: #104C3B !important; }
+
 .footer {
     text-align: center;
-    color: #718078;
+    color: #64756B;
     padding: 22px;
     font-size: 13px;
 }
 
-hr {
-    border-color: #DFE9E0;
+hr, .stApp hr {
+    border-color: #D4E3D6 !important;
     margin-top: 25px;
     margin-bottom: 25px;
 }
-
 </style>
 """, unsafe_allow_html=True)
 
-
-# -------------------------------
 # SIDEBAR
-# -------------------------------
-
 with st.sidebar:
 
     st.markdown("""
@@ -336,11 +274,7 @@ with st.sidebar:
     st.caption("AI + RAG Powered Application")
     st.caption("Maharashtra | India")
 
-
-# -------------------------------
 # HEADER
-# -------------------------------
-
 st.markdown("""
 <div class="main-header">
     <h1>🌾 RationSahayak</h1>
@@ -352,11 +286,7 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-
-# -------------------------------
 # DASHBOARD
-# -------------------------------
-
 if page == "🏠 Dashboard":
 
     st.markdown(
@@ -415,11 +345,7 @@ if page == "🏠 Dashboard":
         "to explore RationSahayak services."
     )
 
-
-# -------------------------------
 # AI ASSISTANT
-# -------------------------------
-
 elif page == "💬 AI Assistant":
 
     st.markdown(
@@ -446,7 +372,17 @@ elif page == "💬 AI Assistant":
                 with st.expander("📚 View Sources"):
 
                     for citation in message["citations"]:
-                        st.write(citation)
+                        with st.container(border=True):
+                            st.markdown(
+                                f"**Source [{citation.get('reference', '')}] — "
+                                f"{citation.get('title', 'Government document')}**"
+                            )
+                            st.caption(
+                                f"Document: {citation.get('source', 'Not available')}"
+                            )
+                            st.caption(
+                                f"Page: {citation.get('page', 'Not available')}"
+                            )
 
     # Question input
     with st.form("chat_form", clear_on_submit=True):
@@ -562,7 +498,7 @@ elif page == "💬 AI Assistant":
                 st.success("Thank you for your feedback!")
 
         with col2:
-            if st.button("👎 Not Helpful", use_container_width=True):
+            if st.button("👍Ž Not Helpful", use_container_width=True):
                 save_feedback("Negative")
                 st.success("Thank you for your feedback!")
 
@@ -570,11 +506,7 @@ elif page == "💬 AI Assistant":
         st.session_state.messages = []
         st.rerun()
 
-
-# -------------------------------
 # RATION CALCULATOR
-# -------------------------------
-
 elif page == "🧾 Ration Calculator":
 
     st.markdown(
@@ -638,11 +570,7 @@ elif page == "🧾 Ration Calculator":
             "provision. Verify the current government notification."
         )
 
-
-# -------------------------------
 # E-POS VERIFICATION
-# -------------------------------
-
 elif page == "🔍 e-PoS Verification":
 
     st.markdown(
@@ -760,11 +688,7 @@ not an official ration receipt.
                 mime="text/plain"
             )
 
-
-# -------------------------------
 # ABOUT PROJECT
-# -------------------------------
-
 elif page == "ℹ️ About Project":
 
     st.markdown(
@@ -814,11 +738,7 @@ elif page == "ℹ️ About Project":
         - Git and GitHub
         """)
 
-
-# -------------------------------
 # FOOTER
-# -------------------------------
-
 st.divider()
 
 st.markdown("""

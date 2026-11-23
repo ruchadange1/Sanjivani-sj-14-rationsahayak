@@ -1,53 +1,61 @@
+
 import json
 from pathlib import Path
 
-# getting the location of the project folder
+# Project data folder
 base_path = Path(__file__).resolve().parent.parent
-file_path = base_path / "data" / "sample_records.json"
+
+# Existing sample dataset (19 records)
+sample_file_path = base_path / "data" / "sample_records.json"
+
+# Newly extracted policy dataset (75 records)
+policy_file_path = base_path / "data" / "records.json"
 
 
-# function to load all records
 def load_records():
-    with open(file_path, "r", encoding="utf-8") as file:
-        records = json.load(file)
+    """Load the existing sample records."""
+    with open(sample_file_path, "r", encoding="utf-8") as file:
+        return json.load(file)
 
-    return records
+
+def load_policy_records():
+    """Load the extracted policy records."""
+    with open(policy_file_path, "r", encoding="utf-8") as file:
+        return json.load(file)
 
 
-# function to search records using a keyword
 def search(records, keyword):
+    """Search records using a keyword."""
+    keyword = keyword.lower()
     result = []
 
     for record in records:
-        if (keyword.lower() in record["topic"].lower() or
-            keyword.lower() in record["rule"].lower() or
-            keyword.lower() in record["card_type"].lower() or
-            keyword.lower() in record["authority"].lower()):
-
+        if (
+            keyword in record.get("topic", "").lower()
+            or keyword in record.get("rule", "").lower()
+            or keyword in record.get("card_type", "").lower()
+            or keyword in record.get("authority", "").lower()
+        ):
             result.append(record)
 
     return result
 
 
-# function to count records by category
 def count_by(records, category="topic"):
+    """Count records by a selected category."""
     count = {}
 
     for record in records:
         value = record.get(category, "Unknown")
-
-        if value in count:
-            count[value] += 1
-        else:
-            count[value] = 1
+        count[value] = count.get(value, 0) + 1
 
     return count
 
 
-# function to get a record using its id
 def get_by_id(records, record_id):
+    """Get a record using its ID."""
     for record in records:
-        if record["id"] == record_id:
+        if record.get("id") == record_id:
             return record
 
     return None

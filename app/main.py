@@ -1,6 +1,6 @@
 import json
-import pathlib
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 import requests
 from fastapi import FastAPI, HTTPException
@@ -10,29 +10,25 @@ from pydantic import BaseModel, Field
 from app.graph import graph
 from app.llm import generate_answer
 from app.rag import ask_question as rag_ask_question
+from app.records import load_policy_records
 from app.smart_search import smart_search
 from app.vectorstore import collection, index_documents, semantic_search
 
-# ==========================================
-# 1. APPLICATION LIFESPAN
-# ==========================================
+BASE_PATH = Path(__file__).resolve().parent.parent
 
+
+# Application startup
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-
     try:
-        document_count = collection.count()
+        count = collection.count()
 
-        if document_count == 0:
-            print("No documents found. Starting document indexing...")
-
+        if count == 0:
+            print("Indexing documents...")
             index_documents()
-
-            print("Document indexing completed.")
-            print("Total indexed documents:", collection.count())
-
+            print("Indexed documents:", collection.count())
         else:
-            print("Documents already indexed:", document_count)
+            print("Documents already indexed:", count)
 
     except Exception as error:
         print("Vector database initialization failed:", error)
@@ -41,33 +37,10 @@ async def lifespan(app: FastAPI):
     yield
 
 
-app = FastAPI(
-    title="RationSahayak API",
-    lifespan=lifespan
-)
+app = FastAPI(title="RationSahayak API", lifespan=lifespan)
 
 
-# ==========================================
-# 2. PROJECT FOLDER LOCATION
-# ==========================================
-
-base_path = pathlib.Path(__file__).resolve().parent.parent
-file_path = base_path / "data" / "records.json"
-
-
-# ==========================================
-# 3. LOAD RECORDS
-# ==========================================
-
-def load_records():
-    with open(file_path, "r", encoding="utf-8") as file:
-        return json.load(file)
-
-
-# ==========================================
-# 4. REQUEST MODELS
-# ==========================================
-
+# Request models
 class Question(BaseModel):
     question: str = Field(..., max_length=1000)
 
@@ -85,144 +58,98 @@ class AgentRequest(BaseModel):
     area: str | None = None
     thread_id: str
     approved: bool = False
-    
 
-# ==========================================
-# 5. HEALTH
-# ==========================================
 
+# Health check
 @app.get("/health")
 def health():
     return {"status": "healthy"}
 
 
-# ==========================================
-# 6. GET RECORDS
-# ==========================================
-
+# Get policy records
 @app.get("/records")
 def get_records(limit: int = 10):
-
     if limit < 1:
         raise HTTPException(status_code=400, detail="Invalid limit")
 
-    records = load_records()
-    result = []
+    records = load_policy_records()
 
-    for i, record in enumerate(records[:limit]):
-        new_record = record.copy()
-        new_record["id"] = i + 1
-        result.append(new_record)
-
-    return result
+    return [
+        {**record, "id": index}
+        for index, record in enumerate(records[:limit], start=1)
+    ]
 
 
-# ==========================================
-# 7. GET RECORD BY ID
-# ==========================================
-
+# Get one record
 @app.get("/records/{id}")
 def get_record(id: int):
-
-    records = load_records()
+    records = load_policy_records()
 
     if id < 1 or id > len(records):
         raise HTTPException(status_code=404, detail="Record not found")
 
-    record = records[id - 1].copy()
-    record["id"] = id
-
-    return record
+    return {**records[id - 1], "id": id}
 
 
-# ==========================================
-# 8. SMART SEARCH
-# ==========================================
-
+# Smart search
 @app.get("/search")
 def search_records(q: str):
-
-    if q.strip() == "":
+    if not q.strip():
         raise HTTPException(status_code=400, detail="Empty search")
 
-    result = smart_search(load_records(), q)
+    results = smart_search(load_policy_records(), q)
 
     return {
         "query": q,
-        "total_results": len(result),
-        "results": result[:5]
+        "total_results": len(results),
+        "results": results[:5]
     }
 
 
-# ==========================================
-# 9. POST QUESTIONS
-# ==========================================
-
+# Question-based record search
 @app.post("/questions")
 def ask_question(data: Question):
+    question = data.question.strip()
 
-    if data.question.strip() == "":
+    if not question:
         raise HTTPException(status_code=400, detail="Empty question")
 
-    result = smart_search(load_records(), data.question)
+    results = smart_search(load_policy_records(), question)
 
     return {
-        "question": data.question,
-        "total_results": len(result),
-        "relevant_records": result[:5]
+        "question": question,
+        "total_results": len(results),
+        "relevant_records": results[:5]
     }
 
 
-# ==========================================
-# 10. CHAT WITH RATIONSAHAYAK
-# ==========================================
-
+# Chat
 @app.post("/chat")
 def chat(data: ChatRequest):
-
     question = data.question.strip()
 
-    if question == "":
+    if not question:
         raise HTTPException(status_code=400, detail="Empty question")
 
-    with open(
-        base_path / "prompts" / "system.txt",
-        "r",
+    system_prompt = (BASE_PATH / "prompts" / "system.txt").read_text(
         encoding="utf-8"
-    ) as file:
-        system_prompt = file.read()
+    )
 
-    if data.task == "eligibility":
-        task_file = "task_2.txt"
-    else:
-        task_file = "task_1.txt"
-
-    with open(
-        base_path / "prompts" / task_file,
-        "r",
+    task_file = "task_2.txt" if data.task == "eligibility" else "task_1.txt"
+    task_prompt = (BASE_PATH / "prompts" / task_file).read_text(
         encoding="utf-8"
-    ) as file:
-        task_prompt = file.read()
+    )
 
-    records = smart_search(load_records(), question)
-
-    context = ""
-
-    for record in records[:5]:
-        context += record["rule"] + "\n"
+    records = smart_search(load_policy_records(), question)
+    context = "\n".join(record["rule"] for record in records[:5])
 
     user_prompt = (
-        task_prompt +
-        "\n\nAvailable Records:\n" +
-        context +
-        "\nQuestion: " + question +
-        "\nReturn only valid JSON."
+        f"{task_prompt}\n\nAvailable Records:\n{context}"
+        f"\nQuestion: {question}\nReturn only valid JSON."
     )
 
     try:
-
         answer = generate_answer(system_prompt, user_prompt)
-
         result = json.loads(answer)
 
         return {
@@ -241,14 +168,10 @@ def chat(data: ChatRequest):
         raise HTTPException(status_code=502, detail="Invalid LLM response")
 
 
-# ==========================================
-# 11. SEMANTIC SEARCH
-# ==========================================
-
+# Semantic search
 @app.get("/search/semantic")
 def search_semantic(q: str):
-
-    if q.strip() == "":
+    if not q.strip():
         raise HTTPException(status_code=400, detail="Empty search query")
 
     if collection.count() == 0:
@@ -256,17 +179,20 @@ def search_semantic(q: str):
 
     results = semantic_search(q)
 
-    response = []
-
-    for i in range(len(results["documents"][0])):
-
-        response.append({
-            "text": results["documents"][0][i],
-            "source": results["metadatas"][0][i]["source"],
-            "page": results["metadatas"][0][i]["page"],
-            "title": results["metadatas"][0][i]["title"],
-            "distance": results["distances"][0][i]
-        })
+    response = [
+        {
+            "text": document,
+            "source": metadata["source"],
+            "page": metadata["page"],
+            "title": metadata["title"],
+            "distance": distance
+        }
+        for document, metadata, distance in zip(
+            results["documents"][0],
+            results["metadatas"][0],
+            results["distances"][0]
+        )
+    ]
 
     return {
         "query": q,
@@ -275,23 +201,18 @@ def search_semantic(q: str):
     }
 
 
-# ==========================================
-# 12. RAG QUESTION ANSWERING
-# ==========================================
-
+# RAG question answering
 @app.post("/ask")
 def ask_rag_question(data: Question):
-
     question = data.question.strip()
 
-    if question == "":
+    if not question:
         raise HTTPException(status_code=400, detail="Empty question")
 
     if collection.count() == 0:
         raise HTTPException(status_code=404, detail="No documents indexed")
 
     try:
-
         result = rag_ask_question(question)
 
         return {
@@ -307,40 +228,23 @@ def ask_rag_question(data: Question):
         raise HTTPException(status_code=502, detail="LLM request failed")
 
 
-# ==========================================
-# 13. LANGGRAPH AGENT
-# ==========================================
-
+# LangGraph agent
 @app.post("/agent")
 def run_agent(data: AgentRequest):
-
     question = data.question.strip()
 
-    if question == "":
+    if not question:
         raise HTTPException(status_code=400, detail="Empty question")
 
-    if data.thread_id.strip() == "":
+    if not data.thread_id.strip():
         raise HTTPException(status_code=400, detail="Thread ID is required")
 
-    config = {
-        "configurable": {
-            "thread_id": data.thread_id
-        }
-    }
+    config = {"configurable": {"thread_id": data.thread_id}}
 
     try:
-
-        # Resume graph after approval
         if data.approved:
-
-            result = graph.invoke(
-                Command(resume=True),
-                config
-            )
-
+            result = graph.invoke(Command(resume=True), config)
         else:
-
-            # Start a new graph execution
             state = {
                 "question": question,
                 "card_type": data.card_type,
@@ -354,9 +258,7 @@ def run_agent(data: AgentRequest):
 
             result = graph.invoke(state, config)
 
-        # Check for approval request
         if "__interrupt__" in result:
-
             return {
                 "status": "approval_required",
                 "message": result["__interrupt__"][0].value["message"],

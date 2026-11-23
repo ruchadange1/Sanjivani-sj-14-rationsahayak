@@ -1,3 +1,4 @@
+
 from app.rag import ask_question
 from app.tools import ration_entitlement
 
@@ -5,10 +6,7 @@ from app.tools import ration_entitlement
 def agent_loop(question, card_type=None, family_size=None,
                annual_income=None, area=None):
 
-    question_lower = question.lower()
-
-    # Decide which tool to use
-    entitlement_keywords = [
+    keywords = [
         "entitlement",
         "how much ration",
         "how many kg",
@@ -17,7 +15,8 @@ def agent_loop(question, card_type=None, family_size=None,
         "income eligibility"
     ]
 
-    if any(word in question_lower for word in entitlement_keywords):
+    # Check whether the question is about ration entitlement
+    if any(word in question.lower() for word in keywords):
 
         if card_type is None or family_size is None:
             return {
@@ -25,20 +24,16 @@ def agent_loop(question, card_type=None, family_size=None,
                 "answer": "Please provide your card type and family size."
             }
 
-        # Call ration entitlement tool
-        result = ration_entitlement(
-            card_type,
-            family_size,
-            annual_income,
-            area
+        answer = ration_entitlement(
+            card_type, family_size, annual_income, area
         )
 
         return {
             "tool_used": "ration_entitlement",
-            "answer": result
+            "answer": answer
         }
 
-    # Otherwise use RAG search
+    # Use RAG for other questions
     result = ask_question(question)
 
     return {
